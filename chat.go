@@ -4,14 +4,10 @@ import (
 	"github.com/gorilla/websocket"
 )
 
-type room struct {
-	forward chan []byte
-}
-
 type client struct {
 	socket *websocket.Conn
-	send chan []byte
-	room *room
+	send   chan []byte
+	room   *room
 }
 
 func (c *client) read() {
@@ -33,8 +29,4 @@ func (c *client) write() {
 			return
 		}
 	}
-}
-
-func main() {
-
 }
