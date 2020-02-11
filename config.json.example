@@ -1,0 +1,10 @@
+{
+  "secretKey": "secret",
+  "oauth": {
+    "provider": {
+      "clientId": "key",
+      "clientSecret": "secret",
+      "redirectUrl": "url"
+    }
+  }
+}

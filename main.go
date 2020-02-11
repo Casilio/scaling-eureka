@@ -7,6 +7,9 @@ import (
 	"net/http"
 	"path/filepath"
 	"sync"
+
+	"github.com/stretchr/gomniauth"
+	"github.com/stretchr/gomniauth/providers/github"
 )
 
 type templateHandler struct {
@@ -23,8 +26,21 @@ func (t *templateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	config, err := NewConfig()
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
 	var addr = flag.String("addr", ":8080", "The address of the application")
 	flag.Parse()
+
+	githubProvider := config.Oauth["github"]
+
+	gomniauth.SetSecurityKey("sgsdfghdtyjurye5rt434535trhggfh")
+	gomniauth.WithProviders(
+		github.New(githubProvider.ClientID, githubProvider.ClientSecret, githubProvider.RedirectURL),
+	)
 
 	r := newRoom()
 	http.Handle("/chat", MustAuth(&templateHandler{filename: "chat.html"}))
