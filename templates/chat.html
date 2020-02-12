@@ -1,6 +1,10 @@
 <html>
 
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <title>Chat</title>
   <style>
     input {
@@ -9,6 +13,7 @@
 
     ul {
       list-style: none;
+      padding: 0;
     }
   </style>
 
@@ -42,7 +47,11 @@
           var msg = JSON.parse(e.data)
           messages.append(
             $("<li>").append(
-              $("<strong>").text(msg.Name + ": "),
+              $("<img>").css({
+                width: '50px',
+                verticalAlign: 'middle'
+              }).attr('src', msg.AvatarURL),
+              $("<strong>").text(msg.Name + ": ").attr("title", msg.When),
               $("<span>").text(msg.Message)
             )
           );
@@ -53,11 +62,12 @@
 </head>
 
 <body>
-  <ul id="messages"></ul>
+  <ul id="messages" class=""></ul>
   <form id="chatbox">
     {{.UserData.name}}:<br>
     <textarea></textarea>
     <input type="submit" value="Send" />
+    or <a href="/logout">sign out</a>
   </form>
 </body>
 
